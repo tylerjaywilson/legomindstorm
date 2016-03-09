@@ -71,7 +71,7 @@ CPU ATMEL_AT91SAM7S256
     AUTOSTART = TRUE
     {
       ALARMTIME = 1;
-      CYCLETIME = 1;  /* EventDispatcher is executed every 1msec */
+      CYCLETIME = 10;  /* EventDispatcher is executed every 1msec */
       APPMODE = appmode1;
     };
   };  
