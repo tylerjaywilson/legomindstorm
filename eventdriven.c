@@ -69,36 +69,38 @@ TASK(MotorControlTask)
    int LightSensorStatus;
    U8 TouchSensorStatus; 
 
+   //Gather the latest touch sensor and light sensor data
    TouchSensorStatus = ecrobot_get_touch_sensor(NXT_PORT_S1);
    LightSensorStatus = ecrobot_get_nxtcolorsensor_light(NXT_PORT_S3);
    
+   //Clear the Touch Sensor Events if the light sensor reaches an edge
    if(LightSensorStatus > 277)
    {     
      display_goto_xy(1,3);
-	 display_int(LightSensorStatus, 4);
-	 nxt_motor_set_speed(NXT_PORT_B, 0, 1);
-	 nxt_motor_set_speed(NXT_PORT_C, 0, 1);	
-	 display_update();
-	 ClearEvent(TouchSensorOnEvent);
-	 ClearEvent(TouchSensorOffEvent);
+     display_int(LightSensorStatus, 4);
+     nxt_motor_set_speed(NXT_PORT_B, 0, 1);
+     nxt_motor_set_speed(NXT_PORT_C, 0, 1);	
+     display_update();
+     ClearEvent(TouchSensorOnEvent);
+     ClearEvent(TouchSensorOffEvent);
    }   
    else if (TouchSensorStatus == 1 && TouchSensorStatus_old == 0)
    {
      display_goto_xy(1,3);
-	 display_int(LightSensorStatus, 4);
-	 display_update();
+     display_int(LightSensorStatus, 4);
+     display_update();
     /* Send a Touch Sensor ON Event to the Handler */ 
      SetEvent(MotorControlTask, TouchSensorOnEvent);
-	 TouchSensorStatus_old = TouchSensorStatus;
+     TouchSensorStatus_old = TouchSensorStatus;
    }
    else if (TouchSensorStatus == 0 && TouchSensorStatus_old == 1)
    {
      display_goto_xy(1,3);
-	 display_int(LightSensorStatus, 4);
-	 display_update();
+     display_int(LightSensorStatus, 4);
+     display_update();
     /* Send a Touch Sensor OFF Event to the Handler */ 
      SetEvent(MotorControlTask, TouchSensorOffEvent);
-	 TouchSensorStatus_old = TouchSensorStatus;
+     TouchSensorStatus_old = TouchSensorStatus;
    }   
 
    TerminateTask();
