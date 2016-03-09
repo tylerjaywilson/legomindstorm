@@ -22,6 +22,7 @@ void user_1ms_isr_type2()
   ecrobot_process_bg_nxtcolorsensor();
 }
 
+// Get the Light Sensor value and display it to the screen
 TASK(TestColorSensor)
 {
   /* Your code */
