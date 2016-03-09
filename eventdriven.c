@@ -72,7 +72,7 @@ TASK(MotorControlTask)
    TouchSensorStatus = ecrobot_get_touch_sensor(NXT_PORT_S1);
    LightSensorStatus = ecrobot_get_nxtcolorsensor_light(NXT_PORT_S3);
    
-   if(LightSensorStatus > 300)
+   if(LightSensorStatus > 277)
    {     
      display_goto_xy(1,3);
 	 display_int(LightSensorStatus, 4);
@@ -80,7 +80,7 @@ TASK(MotorControlTask)
 	 nxt_motor_set_speed(NXT_PORT_C, 0, 1);	
 	 display_update();
 	 ClearEvent(TouchSensorOnEvent);
-	 //ClearEvent(TouchSensorOffEvent);
+	 ClearEvent(TouchSensorOffEvent);
    }   
    else if (TouchSensorStatus == 1 && TouchSensorStatus_old == 0)
    {
@@ -89,6 +89,7 @@ TASK(MotorControlTask)
 	 display_update();
     /* Send a Touch Sensor ON Event to the Handler */ 
      SetEvent(MotorControlTask, TouchSensorOnEvent);
+	 TouchSensorStatus_old = TouchSensorStatus;
    }
    else if (TouchSensorStatus == 0 && TouchSensorStatus_old == 1)
    {
@@ -97,11 +98,8 @@ TASK(MotorControlTask)
 	 display_update();
     /* Send a Touch Sensor OFF Event to the Handler */ 
      SetEvent(MotorControlTask, TouchSensorOffEvent);
-   }
-
-   TouchSensorStatus_old = TouchSensorStatus;
+	 TouchSensorStatus_old = TouchSensorStatus;
+   }   
 
    TerminateTask();
  }
-
- 
