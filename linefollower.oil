@@ -30,11 +30,36 @@ CPU ATMEL_AT91SAM7S256
     STACKSIZE = 512; /* Stack size */
   };
   
+  TASK DisplayTask
+  {
+	AUTOSTART = FALSE;
+    PRIORITY = 2; /* Smaller value means lower priority */
+    ACTIVATION = 1;
+    SCHEDULE = FULL;
+    STACKSIZE = 512; /* Stack size */
+  };
+  
   /* Definition of OSEK Alarm Counter */
   COUNTER SysTimerCnt
   {
     MINCYCLE = 1;
     MAXALLOWEDVALUE = 10000;
     TICKSPERBASE = 1; /* One tick is equal to 1msec */ 
+  };
+  
+  /* Definition of DisplayTask execution timing */
+  ALARM cyclic_alarm1
+  {
+    COUNTER = SysTimerCnt;
+    ACTION = ACTIVATETASK
+    {
+      TASK = DisplayTask;
+    };
+    AUTOSTART = TRUE
+    {
+      ALARMTIME = 1;
+      CYCLETIME = 500;  /* EventDispatcher is executed every 500msec */
+      APPMODE = appmode1;
+    };
   };
 };
