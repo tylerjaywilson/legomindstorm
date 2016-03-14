@@ -17,24 +17,14 @@ CPU ATMEL_AT91SAM7S256
 
   /* Definition of application mode */
   APPMODE appmode1{};
-  
-  /* Definition of EventDispatcher */
-  TASK EventDispatcher
-  {
-    AUTOSTART = FALSE;
-    PRIORITY = 1;
-    ACTIVATION = 1;
-    SCHEDULE = FULL;
-    STACKSIZE = 512; /* Stack size */ 
-  };
-   
+
   TASK MotorControlTask
   {
     AUTOSTART = TRUE
     {
       APPMODE = appmode1;
     };
-    PRIORITY = 2; /* Smaller value means lower priority */
+    PRIORITY = 1; /* Smaller value means lower priority */
     ACTIVATION = 1;
     SCHEDULE = FULL;
     STACKSIZE = 512; /* Stack size */
@@ -47,20 +37,4 @@ CPU ATMEL_AT91SAM7S256
     MAXALLOWEDVALUE = 10000;
     TICKSPERBASE = 1; /* One tick is equal to 1msec */ 
   };
-
-  /* Definition of EventDispatcher execution timing */
-  ALARM cyclic_alarm1
-  {
-    COUNTER = SysTimerCnt;
-    ACTION = ACTIVATETASK
-    {
-      TASK = EventDispatcher;
-    };
-    AUTOSTART = TRUE
-    {
-      ALARMTIME = 1;
-      CYCLETIME = 1;  /* EventDispatcher is executed every 1msec */
-      APPMODE = appmode1;
-    };
-  };  
 };
