@@ -34,6 +34,16 @@ void ecrobot_device_initialize(void)
   ecrobot_init_nxtcolorsensor(NXT_PORT_S3, NXT_LIGHTSENSOR_WHITE);
   nxt_motor_set_speed(NXT_PORT_B, 0, 1);
   nxt_motor_set_speed(NXT_PORT_C, 0, 1);  
+  display_goto_xy(1,1);
+  display_string("Periodic Tasks");
+  display_goto_xy(1,2);
+  display_string("Speed: ");
+  display_goto_xy(1,3);
+  display_string("Duration: ");
+  display_goto_xy(1,3);
+  display_string("Distance: ");
+  display_goto_xy(14,3);
+  display_string("cm");
 }
 void ecrobot_device_terminate(void) 
 {
@@ -71,7 +81,7 @@ TASK(MotorControlTask)
 {
 	if(dc.duration > 0)
 	{
-		change_driving_command(dc.priority, dc.speed, dc.duration-50);
+		change_driving_command(dc.priority, dc.speed, dc.duration-50);	
 	}
 	else if(dc.duration <= 0)
 	{
@@ -86,29 +96,27 @@ TASK(MotorControlTask)
  {  
 	if(ecrobot_get_touch_sensor(NXT_PORT_S1))
 	{
-		change_driving_command(PRIO_BUTTON,-50, 1000);
+		change_driving_command(PRIO_BUTTON,-50, 1000);	//Drive the bot backwards for 1 second
     }
 	TerminateTask();
  }
  
  /* DisplayTask executed every 100ms */
  TASK(DisplayTask)
- {  
-	display_clear(1);
-	display_goto_xy(1,1);
-	display_string("Periodic Tasks");
-	display_goto_xy(1,2);
+ {	
+	//Get the shared resource
 	GetResource(dc_manage);
-	display_string("Speed: ");
+	
+	//Display the updated speed, duration, and distance
+	display_goto_xy(8,2);
 	display_int(dc.speed, 4);
-	display_goto_xy(1,3);
-	display_string("Duration: ");
+	display_goto_xy(10,3);
 	display_unsigned(dc.duration, 4);
+	display_goto_xy(11,3);
+	display_int(15, 4);	//Display the distance
+	
+	//Release the shared resource
 	ReleaseResource(dc_manage);
-	display_goto_xy(1,3);
-	display_string("Distance: ");
-	display_int(dc.speed, 4)
-	display_string(" cm")
 	
 	TerminateTask();
  }
