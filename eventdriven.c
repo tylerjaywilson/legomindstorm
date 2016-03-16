@@ -18,7 +18,7 @@ DeclareEvent(TouchSensorOffEvent); /* Event declaration */
 /* nxtOSEK hooks */
 void ecrobot_device_initialize(void) 
 {
-  ecrobot_init_nxtcolorsensor(NXT_PORT_S3, NXT_LIGHTSENSOR_WHITE);
+  ecrobot_init_nxtcolorsensor(NXT_PORT_S3, NXT_LIGHTSENSOR_RED);
   nxt_motor_set_speed(NXT_PORT_B, 0, 1);
   nxt_motor_set_speed(NXT_PORT_C, 0, 1);  
 }
@@ -74,7 +74,7 @@ TASK(MotorControlTask)
    LightSensorStatus = ecrobot_get_nxtcolorsensor_light(NXT_PORT_S3);
    
    //Clear the Touch Sensor Events if the light sensor reaches an edge
-   if(LightSensorStatus > 277)
+   if(LightSensorStatus < 450)
    {     
      display_goto_xy(1,3);
      display_int(LightSensorStatus, 4);
