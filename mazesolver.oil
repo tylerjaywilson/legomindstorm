@@ -17,12 +17,12 @@ CPU ATMEL_AT91SAM7S256
 
   /* Definition of application mode */
   APPMODE appmode1{};
-   
+  
   /* Definition of DisplayTask */
   TASK DisplayTask
   {
     AUTOSTART = FALSE;
-    PRIORITY = 5;
+    PRIORITY = 1;	//Smaller value means lower priority
     ACTIVATION = 1;
     SCHEDULE = FULL;
     STACKSIZE = 512; /* Stack size */ 
@@ -33,7 +33,7 @@ CPU ATMEL_AT91SAM7S256
   TASK MotorControlTask
   {
     AUTOSTART = FALSE;    
-    PRIORITY = 1; /* Smaller value means lower priority */
+    PRIORITY = 3; /* Smaller value means lower priority */
     ACTIVATION = 1;
     SCHEDULE = FULL;
     STACKSIZE = 512; /* Stack size */
@@ -44,7 +44,7 @@ CPU ATMEL_AT91SAM7S256
   TASK LeftSensorTask
   {
     AUTOSTART = FALSE;    
-    PRIORITY = 3; /* Smaller value means lower priority */
+    PRIORITY = 2; /* Smaller value means lower priority */
     ACTIVATION = 2;
     SCHEDULE = FULL;
     STACKSIZE = 512; /* Stack size */
@@ -55,7 +55,7 @@ CPU ATMEL_AT91SAM7S256
   TASK RightSensorTask
   {
     AUTOSTART = FALSE;    
-    PRIORITY = 3; /* Smaller value means lower priority */
+    PRIORITY = 2; /* Smaller value means lower priority */
     ACTIVATION = 1;
     SCHEDULE = FULL;
     STACKSIZE = 512; /* Stack size */
@@ -103,7 +103,7 @@ CPU ATMEL_AT91SAM7S256
     AUTOSTART = TRUE
     {
       ALARMTIME = 1;
-      CYCLETIME = 50;  /* MotorControlTask is executed every 50msec */
+      CYCLETIME = 50;  /* MotorControlTask is executed every 30msec */
       APPMODE = appmode1;
     };
   };
@@ -151,7 +151,7 @@ CPU ATMEL_AT91SAM7S256
     AUTOSTART = TRUE
     {
       ALARMTIME = 1;
-      CYCLETIME = 50;  /* LeftSensorTask is executed every 50 */
+      CYCLETIME = 50;  /* LeftSensorTask is executed every 30ms */
       APPMODE = appmode1;
     };
   };
@@ -167,7 +167,7 @@ CPU ATMEL_AT91SAM7S256
     AUTOSTART = TRUE
     {
       ALARMTIME = 1;
-      CYCLETIME = 50;  /* RightSensorTask is executed every 50msec */
+      CYCLETIME = 50;  /* RightSensorTask is executed every 30msec */
       APPMODE = appmode1;
     };
   };
@@ -183,7 +183,7 @@ CPU ATMEL_AT91SAM7S256
     AUTOSTART = TRUE
     {
       ALARMTIME = 1;
-      CYCLETIME = 50;  /* FrontSensorTask is executed every 50msec */
+      CYCLETIME = 50;  /* FrontSensorTask is executed every 30msec */
       APPMODE = appmode1;
     };
   };

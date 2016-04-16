@@ -1,5 +1,5 @@
 # Change target name
-TARGET = eventdriven
+TARGET = mazesolver
 TARGET_SOURCES := $(TARGET).c
 TOPPERS_OSEK_OIL_SOURCE = ./$(TARGET).oil
 
