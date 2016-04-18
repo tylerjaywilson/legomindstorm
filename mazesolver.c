@@ -20,10 +20,10 @@
 #define TURNFORWARD 360
 
 //Motor speeds
-#define NOMINAL_SPEED 65
+#define NOMINAL_SPEED 50
 
 //PID defines
-#define KP 9
+#define KP 7
 #define KI 0
 #define KD 0
 #define DT 0.055
@@ -32,7 +32,7 @@
 #define WALL_DISTANCE_LMIN 10
 #define WALL_DISTANCE_LMAX 14
 #define WALL_DISTANCE_RMIN 3
-#define WALL_DISTANCE_FMIN 17
+#define WALL_DISTANCE_FMIN 15
 #define SAFE_ZONE 400
 
 //Priority #defines
